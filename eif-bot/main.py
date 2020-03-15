@@ -3,10 +3,10 @@
 
 import logging
 import telegram
-import time
 from datetime import datetime
 from shedule_scrapper import get_dict
-
+import warnings
+warnings.filterwarnings("ignore")
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 #!/usr/bin/python3
 from telegram.ext import Updater
-from telegram.ext import CommandHandler, CallbackQueryHandler, RegexHandler
+from telegram.ext import CommandHandler, CallbackQueryHandler, MessageHandler
+from telegram.ext.filters import Filters
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
@@ -309,7 +310,7 @@ def callback_alarm(bot, job):
 def main():
     ############################# Handlers #########################################
     TOKEN = '845092429:AAEo5DslhGj0ZFMuRxkKMsiT2wLhqHOIPI8'
-    updater = Updater(TOKEN)
+    updater = Updater(TOKEN, use_context=False)
 
     j = updater.job_queue
     j.run_repeating(callback_alarm, interval=43200, first=0)
@@ -332,7 +333,7 @@ def main():
     updater.dispatcher.add_handler(CallbackQueryHandler(sbd_menu, pattern='ms'))
     updater.dispatcher.add_handler(CallbackQueryHandler(pe_menu, pattern='mp'))
 
-    updater.dispatcher.add_handler(RegexHandler('[а-яА-Я\w*\d*]', listener))
+    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'[а-яА-Я\w*\d*]'), listener))
 
     updater.start_polling()
     updater.idle()

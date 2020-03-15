@@ -17,16 +17,16 @@ requests.packages.urllib3.disable_warnings()
 
 links_dict = {
     'ЭиФ': {
-        1: 'https://lk.ranepa.ru/schedule/?by=agroup&f=7a410e0c-57b9-11e9-80ed-005056a03e4f',
-        2: 'https://lk.ranepa.ru/schedule/?by=agroup&f=52a0a22b-269a-11e8-80ec-000c299441de'
+        1: '7a410e0c-57b9-11e9-80ed-005056a03e4f',
+        2: '52a0a22b-269a-11e8-80ec-000c299441de'
     },
     'СБД': {
-        1: 'https://lk.ranepa.ru/schedule/?by=agroup&f=0faf9460-6513-11e9-80f1-005056a03e4f',
-        2: 'https://lk.ranepa.ru/schedule/?by=agroup&f=f9fc14ba-2825-11e8-80ec-000c299441de'
+        1: '0faf9460-6513-11e9-80f1-005056a03e4f',
+        2: 'f9fc14ba-2825-11e8-80ec-000c299441de'
     },
     'ПЭ': {
-        1: 'https://lk.ranepa.ru/schedule/?by=agroup&f=6e56989d-6513-11e9-80f1-005056a03e4f',
-        2: 'https://lk.ranepa.ru/schedule/?by=agroup&f=10d94515-2826-11e8-80ec-000c299441de'
+        1: '6e56989d-6513-11e9-80f1-005056a03e4f',
+        2: '10d94515-2826-11e8-80ec-000c299441de'
     }
 }
 
@@ -58,7 +58,8 @@ class Shedule():
         while i < 13:
             k += 2
             n_mon = self.next_monday(k)
-            base_link = "{}&type=schedule&date=".format(self.link)
+
+            base_link = "https://lk.ranepa.ru/schedule/?by=agroup&f={}&date=".format(self.link)
             link1 = base_link + n_mon
             while True:
                 try:
@@ -71,7 +72,8 @@ class Shedule():
                             time.sleep(30)
                             continue
                     soup = BeautifulSoup(html, 'lxml')
-                    shedule = soup.findAll('script', {'type': 'text/javascript'})[-2]  # [16]
+                    # print('soup', soup)
+                    shedule = soup.findAll('script', {'type': 'text/javascript'})[-3]  # [16]
                     # print(shedule)
                     p = re.findall('{"days":.*]}', shedule.text)  # re.findall('{"days":.*]}',shedule.text)
                     week_dict = json.loads(p[0])['days'][:-1]  # до следующего воскресенья включительно
