@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 #!/usr/bin/python3
 from telegram.ext import Updater
-from telegram.ext import CommandHandler, CallbackQueryHandler, MessageHandler
+from telegram.ext import CommandHandler, CallbackQueryHandler, RegexHandler
 from telegram.ext.filters import Filters
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -333,7 +333,7 @@ def main():
     updater.dispatcher.add_handler(CallbackQueryHandler(sbd_menu, pattern='ms'))
     updater.dispatcher.add_handler(CallbackQueryHandler(pe_menu, pattern='mp'))
 
-    updater.dispatcher.add_handler(MessageHandler(Filters.regex(r'[а-яА-Я\w*\d*]'), listener))
+    updater.dispatcher.add_handler(RegexHandler(r'[а-яА-Я\w*\d*]', listener))
 
     updater.start_polling()
     updater.idle()
