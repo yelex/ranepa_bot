@@ -310,7 +310,7 @@ def callback_alarm(bot, job):
 def main():
     ############################# Handlers #########################################
     TOKEN = '845092429:AAEo5DslhGj0ZFMuRxkKMsiT2wLhqHOIPI8'
-    updater = Updater(TOKEN, use_context=False)
+    updater = Updater(TOKEN)
 
     j = updater.job_queue
     j.run_repeating(callback_alarm, interval=43200, first=0)
