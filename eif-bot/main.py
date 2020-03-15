@@ -72,7 +72,7 @@ def eif_submenu1_days(bot, update):
     n_days = int(query.data[-1])
     user = query.from_user
     print('{} - {} {}[@{}]: {}'.format(datetime.now().strftime('%d-%m-%Y %H:%M'), user.first_name, user.last_name,
-                                       user.username, 'выбрал(а) ЭиФ 1 курс на {} дня(ей)'.format(n_days)))
+                                       user.username, 'выбрал(а) ЭиФ 1 курс на {} дня(ей)'.format(n_days)), flush=True)
     rasp = "".join(rasp_list[:n_days]) + shedule['Дата']
     bot.edit_message_text(chat_id=query.message.chat_id,
                           message_id=query.message.message_id,
